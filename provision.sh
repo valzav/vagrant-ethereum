@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# installs packages
+# let's install packages
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get -y install build-essential libgmp-dev libgmp3-dev libcrypto++-dev git automake libtool libleveldb-dev yasm unzip libminiupnpc-dev
@@ -8,13 +8,13 @@ sudo apt-get -y install libboost1.53-all-dev
 sudo apt-get -y install qtbase5-dev qt5-default qt5-qmake
 sudo apt-get -y install cmake cmake-curses-gui # cmake-curses-gui might be useful for developers
 
-# creates directories structure
-mkdir builds
+# create directories structure
+mkdir opt
 mkdir bin
 mkdir logs
 
-# downloads and builds ethereum's dependencies
-cd builds
+# download and build ethereum's dependencies
+cd opt
 mkdir cryptopp562
 cd cryptopp562
 wget http://www.cryptopp.com/cryptopp562.zip
@@ -27,17 +27,17 @@ wget http://gavwood.com/secp256k1.tar.bz2
 tar xjf secp256k1.tar.bz2
 cd secp256k1
 ./configure && make
-sudo cp ~/builds/secp256k1/libsecp256k1.so /usr/lib/
+sudo cp ~/opt/secp256k1/libsecp256k1.so /usr/lib/
 cd ..
 
-# downloads and builds ethereum
+# download and build ethereum
 git clone https://github.com/ethereum/cpp-ethereum
 mkdir cpp-ethereum-build
 cd cpp-ethereum-build
 cmake ../cpp-ethereum -DCMAKE_BUILD_TYPE=Release
 make
 
-# downloads and builds alethzero GUI client
+# download and build alethzero GUI client
 mkdir alethzero
 cd alethzero
 qmake ../../cpp-ethereum/alethzero
@@ -45,8 +45,8 @@ make
 
 # now let's create bin folder in user's home dir and create symlinks to executables
 cd ~
-ln -s ~/builds/cpp-ethereum-build/alethzero/alethzero ~/bin/alethzero
-ln -s ~/builds/cpp-ethereum-build/eth/eth ~/bin/eth
+ln -s ~/opt/cpp-ethereum-build/alethzero/alethzero ~/bin/alethzero
+ln -s ~/opt/cpp-ethereum-build/eth/eth ~/bin/eth
 
 # Configure a Server
 

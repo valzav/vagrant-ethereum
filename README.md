@@ -1,6 +1,6 @@
 # Vagrant Ethereum
 
-Creates development environment based on Ubunt 13.04 to compile and run Ethereum client using Vagrant and VirtualBox.
+Creates development environment based on Ubunt 13.10 to compile and run Ethereum client using Vagrant and VirtualBox.
 
 
 ## Installation
