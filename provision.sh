@@ -9,38 +9,45 @@ sudo apt-get -y install qtbase5-dev qt5-default qt5-qmake
 sudo apt-get -y install cmake cmake-curses-gui # cmake-curses-gui might be useful for developers
 
 # create directories structure
+[ ! -d "ethereum" ] && mkdir ethereum # ethereum dir maybe mapped from host machine
 mkdir opt
 mkdir bin
 mkdir logs
 
+# download cpp-ethereum if needed
+cd ethereum
+[ ! -d "cpp-ethereum" ] && git clone https://github.com/ethereum/cpp-ethereum
+
 # download and build ethereum's dependencies
-cd opt
-mkdir cryptopp562
-cd cryptopp562
-wget http://www.cryptopp.com/cryptopp562.zip
-unzip cryptopp562.zip
-make
-sudo make install
-cd ..
+cd ~/opt
+if [ ! -d "cryptopp562" ]; then
+  mkdir cryptopp562
+  cd cryptopp562
+  wget http://www.cryptopp.com/cryptopp562.zip
+  unzip cryptopp562.zip
+  CXX="g++ -fPIC" make
+  make dynamic
+  sudo make install
+fi
 
-wget http://gavwood.com/secp256k1.tar.bz2
-tar xjf secp256k1.tar.bz2
-cd secp256k1
-./configure && make
-sudo cp ~/opt/secp256k1/libsecp256k1.so /usr/lib/
-cd ..
+#wget http://gavwood.com/secp256k1.tar.bz2
+#tar xjf secp256k1.tar.bz2
+#cd secp256k1
+#./configure && make
+#sudo cp ~/opt/secp256k1/libsecp256k1.so /usr/lib/
+#cd ..
 
-# download and build ethereum
-git clone https://github.com/ethereum/cpp-ethereum
+# build ethereum
+cd ~/opt
 mkdir cpp-ethereum-build
 cd cpp-ethereum-build
-cmake ../cpp-ethereum -DCMAKE_BUILD_TYPE=Release
+cmake ~/ethereum/cpp-ethereum -DCMAKE_BUILD_TYPE=Debug
 make
 
-# download and build alethzero GUI client
+# build alethzero GUI client
 mkdir alethzero
 cd alethzero
-qmake ../../cpp-ethereum/alethzero
+qmake ~/ethereum/cpp-ethereum/alethzero
 make
 
 # now let's create bin folder in user's home dir and create symlinks to executables
