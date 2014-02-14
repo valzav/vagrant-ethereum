@@ -29,7 +29,13 @@ Run command line Ethereum client (more info https://github.com/ethereum/cpp-ethe
 
 Or run AlephZero - Ethereum graphical client (more info https://github.com/ethereum/cpp-ethereum/wiki/Using-AlephZero)
 
-    $ bin/alephzero
+    $ bin/alethzero
 
-Note: AlephZero requires X server to be running on your host machine. I recommend XQuartz if you are using OS X.
+Please note that alethzero is a graphical client and requires X Server for its work, this setup uses Ubuntu Server which doesn't include any GUI,
+but you may use X Server installed on your host machine:
 
+- On OS X just install XQuartz, connect to ehtereum guest VM via "vagrant ssh" command and run "bin/alethzero"
+
+- On Windows hosts you would need Xming X Server (http://sourceforge.net/projects/xming/) and PuTTY SSH client (http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html).
+  After you install Xming and PuTTY you need to configure PuTTY to access guest VM, type "vagrant ssh-config", note where private key located,
+  use PuTTYgen to convert it into PuTTY format, connect to VM via PuTTY, run bin/alethzero - it should open in Xming.
