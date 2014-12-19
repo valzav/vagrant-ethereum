@@ -3,10 +3,14 @@
 # let's install packages
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get -y install build-essential libgmp-dev libgmp3-dev libcrypto++-dev git automake libtool libleveldb-dev yasm unzip libminiupnpc-dev
-sudo apt-get -y install libboost1.53-all-dev
-sudo apt-get -y install qtbase5-dev qt5-default qt5-qmake
-sudo apt-get -y install cmake cmake-curses-gui # cmake-curses-gui might be useful for developers
+sudo apt-get -y install build-essential g++-4.8 git cmake libboost-all-dev automake unzip libgmp-dev libtool libleveldb-dev yasm libminiupnpc-dev libreadline-dev scons libncurses5-dev libcurl4-openssl-dev wget qtbase5-dev qt5-default qtdeclarative5-dev libqt5webkit5-dev libjsoncpp-dev libargtable2-dev
+
+# Setup Ethereum repos
+#sudo apt-get install software-properties-common
+sudo add-apt-repository -y ppa:ethereum/ethereum
+sudo add-apt-repository -y ppa:ethereum/ethereum-dev
+sudo apt-get update
+sudo apt-get install libcryptopp-dev libjson-rpc-cpp-dev
 
 # create directories structure
 [ ! -d "ethereum" ] && mkdir ethereum # ethereum dir maybe mapped from host machine
@@ -29,13 +33,6 @@ if [ ! -d "cryptopp562" ]; then
   make dynamic
   sudo make install
 fi
-
-#wget http://gavwood.com/secp256k1.tar.bz2
-#tar xjf secp256k1.tar.bz2
-#cd secp256k1
-#./configure && make
-#sudo cp ~/opt/secp256k1/libsecp256k1.so /usr/lib/
-#cd ..
 
 # build ethereum
 cd ~/opt
